@@ -36,37 +36,43 @@ int main()
 
 	int grid = rand() % 64 + 1; //Random number between 1 and 64.
 	int predictions = 1;
-	int gridLocation = rand() % 64 + 1; //Random number between 1 and 64.;
+	//int enemyLocation = rand() % 64 + 1; //Random number between 1 and 64.
 
-	//int targetLocationPrediction = ((searchGridHighNumber - searchGridLowNumber) / 2) + searchGridLowNumber;
+	bool enemyFound = false;
+
+	int targetLocationPrediction = ((enemyFound - grid) / 2) + grid;
+
+	cout << targetLocationPrediction;
 
 	cout << "\n\t\t\t\t\t Welcome to Skynet, Captain.\n\n";
 	cout << "Today, you will be witnessing our newest A.I UAV. The 'HK-Aerial'.\n\n";
 	cout << "HK-Aerial Software Initalizing...\n\n";
 	cout << "Captain, our Intelligence software stragetically places an enemy randomly within an 8x8 Grid.\nAllowing 1 of 64 random locations to be selected within the grid\n";
 	cout << "HK-Aerial, automatically hunts down and tracks the enemy in the correct grid sector within a matter of seconds.\n\n";
+	cout << "The enemy is located in Grid #" << grid << "\n";
 
 	//Create the search loop (do) function.
 	do
 	{
-		cout << "'HK-Aerial' Sending out Ping # " << predictions;
+		cout << "'HK-Aerial' Sending out Ping # " << predictions << "\n";
 
-		if (gridLocation > grid)
+		if (targetLocationPrediction > grid)
 		{
-			cout << "\nThe target location of Grid # " << gridLocation << " is higher than the actual grid of the enemy.\n" ;
-			//predictions++;
+			cout << "\nThe enemy location is not in Grid # " << targetLocationPrediction << "number too high.\n";
+			predictions++;
 		}
-		else if (gridLocation < grid)
+		else if (targetLocationPrediction < grid)
 		{
-			cout << "\nThe target location of Grid # " << gridLocation << " is lower than the actual grid of the enemy.\n";
-			//predictions++;
+			cout << "\nThe enemy location is not in Grid # " << targetLocationPrediction << " number too low.\n";
+			predictions++;
 		}
-		else
+		else 
 		{
 			cout << "\nEnemy Location Spotted. Only took 'HK-Aerial " << predictions << " search attempts.\n";
+			enemyFound = true;
 		}
 
-	} while (gridLocation != grid);
+	} while (grid != targetLocationPrediction);
 
 	system("pause");
 	return(0);
