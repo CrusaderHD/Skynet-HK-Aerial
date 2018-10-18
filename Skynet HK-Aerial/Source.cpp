@@ -34,45 +34,48 @@ int main()
 {
 	srand(static_cast<unsigned int>(time(0)));  //Seed the Random Number Generator.
 
-	int grid = rand() % 64 + 1; //Random number between 1 and 64.
-	int predictions = 1;
-	//int enemyLocation = rand() % 64 + 1; //Random number between 1 and 64.
+	int enemyLocation = rand() % 64 + 1; //Random number between 1 and 64.
+	int gridMax = 64;
+	int gridMin = 1;
+	int predictions = 0;
+	int guessLocation = rand() % 64 + 1; //Random number between 1 and 64.
 
 	bool enemyFound = false;
-
-	int targetLocationPrediction = ((enemyFound - grid) / 2) + grid;
-
-	cout << targetLocationPrediction;
-
 	cout << "\n\t\t\t\t\t Welcome to Skynet, Captain.\n\n";
 	cout << "Today, you will be witnessing our newest A.I UAV. The 'HK-Aerial'.\n\n";
 	cout << "HK-Aerial Software Initalizing...\n\n";
 	cout << "Captain, our Intelligence software stragetically places an enemy randomly within an 8x8 Grid.\nAllowing 1 of 64 random locations to be selected within the grid\n";
 	cout << "HK-Aerial, automatically hunts down and tracks the enemy in the correct grid sector within a matter of seconds.\n\n";
-	cout << "The enemy is located in Grid #" << grid << "\n";
+	
 
 	//Create the search loop (do) function.
 	do
 	{
 		cout << "'HK-Aerial' Sending out Ping # " << predictions << "\n";
+		
 
-		if (targetLocationPrediction > grid)
+		if (guessLocation > enemyLocation)
 		{
-			cout << "\nThe enemy location is not in Grid # " << targetLocationPrediction << "number too high.\n";
+			cout << "\nThe enemy location is not in Grid # " << guessLocation << " number too high.\n";
+			gridMax = guessLocation;
+			guessLocation = ((gridMax - gridMin) / 2) + gridMin;
 			predictions++;
 		}
-		else if (targetLocationPrediction < grid)
+		else if (guessLocation < enemyLocation)
 		{
-			cout << "\nThe enemy location is not in Grid # " << targetLocationPrediction << " number too low.\n";
+			cout << "\nThe enemy location is not in Grid # " << guessLocation << " number too low.\n";
+			gridMin = guessLocation;
+			guessLocation = ((gridMax - gridMin) / 2) + gridMin;
 			predictions++;
 		}
-		else 
+		if(guessLocation == enemyLocation)
 		{
+			cout << "\nThe enemy was located in Grid #" << enemyLocation << "\n";
 			cout << "\nEnemy Location Spotted. Only took 'HK-Aerial " << predictions << " search attempts.\n";
 			enemyFound = true;
 		}
 
-	} while (grid != targetLocationPrediction);
+	} while (enemyLocation != guessLocation);
 
 	system("pause");
 	return(0);
